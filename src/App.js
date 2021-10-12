@@ -16,6 +16,19 @@ class App extends Component {
     number: "",
   };
 
+  componentDidMount() {
+    const contactStorage = localStorage.getItem("contacts");
+    if (contactStorage) {
+      this.setState({ contacts: JSON.parse(contactStorage) });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const contact = {
